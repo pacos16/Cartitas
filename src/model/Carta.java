@@ -12,7 +12,9 @@ public class Carta {
 	private int velocidad;
 	private float consumo;
 	
-	
+	public Carta() {
+		
+	}
 	
 	public Carta(int id, String marca, String modelo, int motor, int cilindros, String potencia, int revolucinoes,
 			int velocidad, float consumo) {
