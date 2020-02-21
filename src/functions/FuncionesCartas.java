@@ -9,6 +9,13 @@ import java.util.ArrayList;
 import model.Carta;
 
 
+/**
+ * Funciones Cartas
+ * @author Paco Signes
+ * Clase singleton que gestiona las conexiones a la base de datos
+ * Obtiene las cartas y se encarga de todas las fuciones relacionadas
+ * con ellas.
+ */
 public class FuncionesCartas {
 	
 	private Connection connection;
@@ -104,6 +111,25 @@ public class FuncionesCartas {
 		
 		return false;
 				
+	}
+	
+	public boolean deleteCarta(int id) {
+		
+		String query="delete from cartas where id=?";
+		
+		PreparedStatement ps;
+		try {
+			ps = connection.prepareStatement(query);
+			ps.setInt(1, id);
+			
+			
+			return ps.execute();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			return false;
+		}
+		
+		
 	}
 
 }
