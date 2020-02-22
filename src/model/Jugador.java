@@ -5,6 +5,10 @@ public class Jugador {
 	private String correo;
 	private String contraseña;
 	private String nickname;
+	
+	public Jugador() {
+		
+	}
 	public Jugador(String correo, String contraseña, String nickname) {
 		super();
 		this.correo = correo;

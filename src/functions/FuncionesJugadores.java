@@ -55,6 +55,38 @@ public class FuncionesJugadores {
 		
 	}
 	
+	public Jugador getUnJugador(String correo) {
+		
+		String query="SELECT * FROM jugadores WHERE correo=?";
+		
+		PreparedStatement statement;
+		ResultSet resultSet;
+		
+		
+		try {
+			
+			
+			statement=connection.prepareStatement(query);
+			statement.setString(1, correo);
+			resultSet=statement.executeQuery();
+			resultSet.next();
+			
+			return new Jugador(
+					resultSet.getString("correo"),
+					resultSet.getString("contrasenya"),
+					resultSet.getString("nickname")
+					);
+			
+			
+			
+		} catch (SQLException e) {
+			System.out.println("Why?");
+			return null;
+		}
+		
+	
+	}
+	
 	public boolean addJugador(Jugador j) {
 		
 		String query="insert into jugadores (correo,contrasenya,nickname) "
@@ -65,9 +97,9 @@ public class FuncionesJugadores {
 			preparedStatement.setString(1,j.getCorreo());
 			preparedStatement.setString(2,j.getContraseña());
 			preparedStatement.setString(3,j.getNickname());
-			boolean response=preparedStatement.execute();
+			preparedStatement.execute();
 			preparedStatement.close();
-			return response;
+			return true;
 
 
 		} catch (SQLException e) {
@@ -76,6 +108,45 @@ public class FuncionesJugadores {
 		}
 		
 		
+		
+	}
+	
+	public boolean deleteJugador(String correo) {
+		
+		String query="delete from jugadores where correo=?";
+		
+		PreparedStatement ps;
+		try {
+			ps = connection.prepareStatement(query);
+			ps.setString(1, correo);
+			
+			ps.execute();
+			ps.close();
+			return true;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			return false;
+		}
+		
+		
+	}
+	public boolean updateJugador(String correo,Jugador jugador) {
+		
+		String query="UPDATE jugadores SET contrasenya=?,nickname=? "
+				+ " WHERE correo=?";
+		
+		try {
+			PreparedStatement ps= connection.prepareStatement(query);
+			ps.setString(1,jugador.getContraseña());
+			ps.setString(2, jugador.getNickname());
+			ps.setString(3, correo);
+			ps.execute();
+			ps.close();
+			return true;
+			
+		} catch (SQLException e) {
+		return false;
+		}
 		
 	}
 	

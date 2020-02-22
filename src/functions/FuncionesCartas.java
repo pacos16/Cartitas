@@ -83,6 +83,7 @@ public class FuncionesCartas {
 
 	}
 	
+	
 	public boolean addCarta(Carta carta) {
 		
 		String query= "INSERT INTO cartas "
@@ -123,9 +124,9 @@ public class FuncionesCartas {
 			ps = connection.prepareStatement(query);
 			ps.setInt(1, id);
 			
-			boolean response=ps.execute();
+			ps.execute();
 			ps.close();
-			return response;
+			return true;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			return false;
@@ -150,9 +151,9 @@ public class FuncionesCartas {
 			ps.setInt(7,carta.getVelocidad());
 			ps.setFloat(8, carta.getConsumo());
 			ps.setInt(9, id);
-			boolean response=ps.execute();
+			ps.execute();
 			ps.close();
-			return response;
+			return true;
 			
 		} catch (SQLException e) {
 		return false;
