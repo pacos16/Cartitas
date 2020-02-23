@@ -111,7 +111,7 @@ public class FuncionesJugadores {
 		
 	}
 	
-	public boolean deleteJugador(String correo) {
+	public int deleteJugador(String correo) {
 		
 		String query="delete from jugadores where correo=?";
 		
@@ -120,12 +120,12 @@ public class FuncionesJugadores {
 			ps = connection.prepareStatement(query);
 			ps.setString(1, correo);
 			
-			ps.execute();
+			int x=ps.executeUpdate();
 			ps.close();
-			return true;
+			return x;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			return false;
+			return 0;
 		}
 		
 		
@@ -140,9 +140,9 @@ public class FuncionesJugadores {
 			ps.setString(1,jugador.getContraseña());
 			ps.setString(2, jugador.getNickname());
 			ps.setString(3, correo);
-			ps.execute();
+			boolean result=ps.execute();
 			ps.close();
-			return true;
+			return result;
 			
 		} catch (SQLException e) {
 		return false;

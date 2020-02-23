@@ -53,7 +53,7 @@ public class ApiJugadores {
 		if(funcionesJugadores.addJugador(j)) {
 			return Response.status(200).entity(json).build();
 		}else {
-			return Response.status(500).entity(gson.toJson("fail")).build();
+			return Response.status(404).entity(json).build();
 		}
 	}
 	
@@ -62,7 +62,7 @@ public class ApiJugadores {
 	@Produces(MediaType.TEXT_HTML)
 	public Response deleteCarta(@PathParam("correo") String correo) {
 		FuncionesJugadores funcionesJugadores=FuncionesJugadores.getInstance();
-		if(funcionesJugadores.deleteJugador(correo)) {
+		if(funcionesJugadores.deleteJugador(correo)>0) {
 			return Response.status(200).entity("Success").build();
 		}
 		return Response.status(404).entity("404-Not found").build();
@@ -81,7 +81,7 @@ public class ApiJugadores {
 		if(funcionesJugadores.updateJugador(correo, gson.fromJson(json, Jugador.class))) {
 			return Response.status(200).entity(json).build();
 		}else {
-			return Response.status(404).entity(json).build();
+			return Response.status(404).entity(null).build();
 		}
 	}
 

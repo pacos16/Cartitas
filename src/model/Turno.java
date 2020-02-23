@@ -3,9 +3,10 @@ package model;
 public class Turno {
 	
 	private int partida;
-	private Carta CartaJugador;
-	private Carta CartaCpu;
-	private Caracteristicas caracteristica;
+	private int cartaJugador;
+	private int cartaCpu;
+	private int caracteristica;
+	private int numTurno;
 	private boolean ataque;
 	private int resultado;
 	
@@ -13,14 +14,23 @@ public class Turno {
 		
 	}
 	
-	public Turno(int partida, Carta cartaJugador, Carta cartaCpu,Caracteristicas caracteristica, boolean ataque, int resultado) {
+	public Turno(int partida, int cartaJugador, int cartaCpu,int caracteristica,int numTurno, boolean ataque, int resultado) {
 		super();
 		this.partida = partida;
-		CartaJugador = cartaJugador;
-		CartaCpu = cartaCpu;
+		this.cartaJugador = cartaJugador;
+		this.cartaCpu = cartaCpu;
+		this.numTurno=numTurno;
 		this.caracteristica=caracteristica;
 		this.ataque = ataque;
 		this.resultado = resultado;
+	}
+
+	public int getNumTurno() {
+		return numTurno;
+	}
+
+	public void setNumTurno(int numTurno) {
+		this.numTurno = numTurno;
 	}
 
 	public int getPartida() {
@@ -31,27 +41,27 @@ public class Turno {
 		this.partida = partida;
 	}
 
-	public Carta getCartaJugador() {
-		return CartaJugador;
+	public int getCartaJugador() {
+		return cartaJugador;
 	}
 
-	public void setCartaJugador(Carta cartaJugador) {
-		CartaJugador = cartaJugador;
+	public void setCartaJugador(int cartaJugador) {
+		this.cartaJugador = cartaJugador;
 	}
 
-	public Carta getCartaCpu() {
-		return CartaCpu;
+	public int getCartaCpu() {
+		return cartaCpu;
 	}
 
-	public void setCartaCpu(Carta cartaCpu) {
-		CartaCpu = cartaCpu;
+	public void setCartaCpu(int cartaCpu) {
+		this.cartaCpu = cartaCpu;
 	}
 
-	public Caracteristicas getCaracteristica() {
+	public int getCaracteristica() {
 		return caracteristica;
 	}
 
-	public void setCaracteristica(Caracteristicas caracteristica) {
+	public void setCaracteristica(int caracteristica) {
 		this.caracteristica = caracteristica;
 	}
 
@@ -69,6 +79,13 @@ public class Turno {
 
 	public void setResultado(int resultado) {
 		this.resultado = resultado;
+	}
+
+	@Override
+	public String toString() {
+		return "Turno [partida=" + partida + ", cartaJugador=" + cartaJugador + ", cartaCpu=" + cartaCpu
+				+ ", caracteristica=" + caracteristica + ", numTurno=" + numTurno + ", ataque=" + ataque
+				+ ", resultado=" + resultado + "]";
 	}
 	
 	
