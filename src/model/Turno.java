@@ -11,6 +11,13 @@ public class Turno {
 	private int resultado;
 	
 	public Turno() {
+		int partida=0;
+		int cartaJugador=0;
+		int cartaCpu=0;
+		int caracteristica=0;
+		int numTurno=0;
+		boolean ataque=false;
+		int resultado=0;
 		
 	}
 	

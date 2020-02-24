@@ -67,8 +67,17 @@ public class ApiMetodosJuego {
 		return Response.status(200).entity(new Gson().toJson(cartas)).build();
 		
 	}
-
 	
+	@POST
+	@Path("jugarTurno")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response postTurno(String json) {
+		Turno t=new Gson().fromJson(json,Turno.class);
+		MetodosJuego mj=MetodosJuego.getInstance();
+		t=mj.recibirTurno(t);
+		return Response.status(200).entity(new Gson().toJson(t)).build();
+	}
 	
 
 }

@@ -31,10 +31,12 @@ public class MetodosJuego {
 	}
 	
 	
-	public void recibirTurno(Turno t) {
+	public Turno recibirTurno(Turno t) {
 		
 		if(t.isAtaque()) {
-			
+			ArrayList<Carta> manoCpu=getCpuDraft(t.getPartida());
+			t.setCartaCpu(manoCpu.get(0).getId());
+			setCartaJugada(t.getPartida(),t.getCartaCpu());
 		}
 		
 		ResultadosTurnos rt=calcularResultado(t);
@@ -48,8 +50,19 @@ public class MetodosJuego {
 			FuncionesPartidas fp=FuncionesPartidas.getInstance();
 			fp.setPartidaResult(t.getPartida(),resultado);
 		}else {
-			
+			if(t.isAtaque()) {
+				ArrayList<Carta> manoCpu=getCpuDraft(t.getPartida());
+				Turno turno=new Turno();
+				turno.setCartaCpu(manoCpu.get(0).getId());
+				Random random=new Random();
+				int r=random.nextInt(7);
+				turno.setCaracteristica(r);
+				turno.setResultado(t.getResultado());
+				setCartaJugada(t.getPartida(),turno.getCartaCpu());
+				t=turno;
+			}
 		}
+		return t;
 	}
 	
 	
@@ -84,8 +97,6 @@ public class MetodosJuego {
 		Carta cartaPlayer=cartas.get(t.getCartaJugador()-1);
 		Carta cartaCpu=cartas.get(t.getCartaCpu()-1);
 		Caracteristicas caracteristica=Caracteristicas.values()[t.getCaracteristica()];
-		System.out.println(cartaPlayer);
-		System.out.println(cartaCpu);
 		switch(caracteristica) {
 		case MOTOR:
 			if(cartaPlayer.getMotor()>cartaCpu.getMotor()) {
@@ -177,7 +188,7 @@ public class MetodosJuego {
 			rs=ps.executeQuery();
 			
 			while(rs.next()) {
-				if(!rs.getBoolean("juagada")) {
+				if(!rs.getBoolean("jugada")) {
 					mano.add(cartas.get(rs.getInt("id_carta")-1));
 				}
 			}
@@ -186,6 +197,22 @@ public class MetodosJuego {
 		}
 		
 		return mano;
+	}
+	
+	public int setCartaJugada(int idPartida,int idCarta) {
+		String query="UPDATE cpu_drafts SET jugada=1 "
+				+ "WHERE id_partida=? AND id_carta=?";
+		PreparedStatement ps;
+		
+		try {
+			ps=connection.prepareStatement(query);
+			ps.setInt(1, idPartida);
+			ps.setInt(2, idCarta);
+			return ps.executeUpdate();
+			
+		} catch (SQLException e) {
+			return 0;
+		}
 	}
 	
 	private void deleteCpuDraft(int idPartida) {
