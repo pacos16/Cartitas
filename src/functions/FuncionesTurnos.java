@@ -60,6 +60,45 @@ public ArrayList<Turno> getTurnos(){
 		
 		
 	}
+/**
+ * 
+ * @param idPartida
+ * @return
+ */
+public ArrayList<Turno> getTurnosPartida(int idPartida){
+	
+	String query="select * from turnos WHERE id_partida=?";
+	
+	PreparedStatement ps;
+	ResultSet resultSet;
+	ArrayList<Turno> turnos=new ArrayList();
+	
+	try {
+		ps=connection.prepareStatement(query);
+		ps.setInt(1, idPartida);
+		resultSet=ps.executeQuery();
+		
+		while(resultSet.next()) {
+			
+			turnos.add(new Turno(
+						resultSet.getInt("id_partida"),
+						resultSet.getInt("id_carta_jugador"),
+						resultSet.getInt("id_carta_cpu"),
+						resultSet.getInt("caracteristica"),
+						resultSet.getInt("num_turno"),
+						resultSet.getBoolean("ataque"),
+						resultSet.getInt("resultado")
+						
+					));
+		}
+		ps.close();
+	} catch (SQLException e) {
+		return null;
+	}
+	return turnos;
+	
+	
+}
 	
 	public Turno getUnTurno(int idPartida , int numTurno) {
 		
