@@ -130,7 +130,7 @@ public class FuncionesJugadores {
 		
 		
 	}
-	public boolean updateJugador(String correo,Jugador jugador) {
+	public int updateJugador(String correo,Jugador jugador) {
 		
 		String query="UPDATE jugadores SET contrasenya=?,nickname=? "
 				+ " WHERE correo=?";
@@ -140,12 +140,12 @@ public class FuncionesJugadores {
 			ps.setString(1,jugador.getContraseña());
 			ps.setString(2, jugador.getNickname());
 			ps.setString(3, correo);
-			boolean result=ps.execute();
+			int result=ps.executeUpdate();
 			ps.close();
 			return result;
 			
 		} catch (SQLException e) {
-		return false;
+		return 0;
 		}
 		
 	}

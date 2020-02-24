@@ -2,21 +2,18 @@ package model;
 
 public class Partida {
 	
-	
-	public enum Resultados{
-		EN_CURSO,GANADA,PERDIDA,EMPATE
-	}
+
 	
 	private int idPartida;
 	private int idPlayer;
 	private boolean esPrimero;
-	private Resultados resultado;
+	private int resultado;
 	public Partida(int idPartida, int idPlayer, boolean esPrimero, int resultado) {
 		super();
 		this.idPartida = idPartida;
 		this.idPlayer = idPlayer;
 		this.esPrimero = esPrimero;
-		this.resultado= Resultados.values()[resultado];
+		this.resultado= resultado;
 		
 	}
 	public int getIdPartida() {
@@ -37,10 +34,10 @@ public class Partida {
 	public void setEsPrimero(boolean esPrimero) {
 		this.esPrimero = esPrimero;
 	}
-	public Resultados getResultado() {
+	public int getResultado() {
 		return resultado;
 	}
-	public void setResultado(Resultados resultado) {
+	public void setResultado(int resultado) {
 		this.resultado = resultado;
 	}
 	

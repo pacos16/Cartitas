@@ -78,7 +78,7 @@ public class ApiJugadores {
 
 		Gson gson=new Gson();
 		
-		if(funcionesJugadores.updateJugador(correo, gson.fromJson(json, Jugador.class))) {
+		if(funcionesJugadores.updateJugador(correo, gson.fromJson(json, Jugador.class))>0) {
 			return Response.status(200).entity(json).build();
 		}else {
 			return Response.status(404).entity(null).build();

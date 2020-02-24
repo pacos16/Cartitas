@@ -102,9 +102,9 @@ public class FuncionesCartas {
 			ps.setInt(7,carta.getRevolucinoes());
 			ps.setInt(8,carta.getVelocidad());
 			ps.setFloat(9,carta.getConsumo());
-			boolean response=ps.execute();
+			ps.execute();
 			ps.close();
-			return response;
+			return true;
 			
 		} catch (SQLException e) {
 			
