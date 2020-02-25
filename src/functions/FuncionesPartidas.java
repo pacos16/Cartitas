@@ -9,7 +9,11 @@ import java.util.ArrayList;
 
 import model.Partida;
 import model.ResultadosPartidas;
-
+/**
+ * Clase singleton que se encarga de las funciones de las partidas
+ * @author user
+ *
+ */
 public class FuncionesPartidas {
 	
 	private Connection connection;
@@ -41,7 +45,7 @@ public class FuncionesPartidas {
 			while(rs.next()) {
 				partidas.add(new Partida(
 						rs.getInt("id_partida"),
-						rs.getInt("id_player"),
+						rs.getString("id_player"),
 						rs.getBoolean("esPrimero"),
 						rs.getInt("resultado")
 						));
@@ -68,7 +72,7 @@ public class FuncionesPartidas {
 			rs.next();
 			p=new Partida(
 					rs.getInt("id_partida"),
-					rs.getInt("id_player"),
+					rs.getString("id_player"),
 					rs.getBoolean("esPrimero"),
 					rs.getInt("resultado")
 					);
@@ -94,7 +98,7 @@ public class FuncionesPartidas {
 		
 		try {
 			ps=connection.prepareStatement(query);
-			ps.setInt(1,partida.getIdPlayer());
+			ps.setString(1,partida.getIdPlayer());
 			ps.setBoolean(2, partida.isEsPrimero());
 			ps.setInt(3, partida.getResultado());
 			ps.execute();
@@ -114,7 +118,7 @@ public class FuncionesPartidas {
 		
 		try {
 			ps=connection.prepareStatement(query);
-			ps.setInt(1,partida.getIdPlayer());
+			ps.setString(1,partida.getIdPlayer());
 			ps.setBoolean(2, partida.isEsPrimero());
 			ps.setInt(3, partida.getResultado());
 			int result=ps.executeUpdate();
@@ -125,7 +129,12 @@ public class FuncionesPartidas {
 		}
 		
 	}
-	
+	/**
+	 * Esta funcion se encarga de setear el resultado de la partida
+	 * @param idPartida
+	 * @param resultado
+	 * @return
+	 */
 	public int setPartidaResult(int idPartida, ResultadosPartidas resultado) {
 		String query="UPDATE partidas SET resultado=? "
 				+ "WHERE id_partida=?";

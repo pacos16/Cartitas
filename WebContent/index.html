@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Inicio</title>
+</head>
+<body>
+
+<img src="https://cochesnuevos.autofacil.es/img/BMW_I8.jpg"/>
+<h1>Endpoints</h1>
+<span>Todos los endpoints tienen get todos, get con pathparam, put con pathparam y json body, post por josn body y delete con parametro</span>
+<h2>Jugadores</h2>
+<a href="http://localhost:8080/ApiRESTFul/rest/jugadores">http://localhost:8080/ApiRESTFul/rest/jugadores</a> <br>
+<a href="http://localhost:8080/ApiRESTFul/rest/jugadores/1">http://localhost:8080/ApiRESTFul/rest/jugadores/1</a><br>
+
+<h2>Partidas</h2>
+<a href="http://localhost:8080/ApiRESTFul/rest/partidas">http://localhost:8080/ApiRESTFul/rest/partidas</a> <br>
+<a href="http://localhost:8080/ApiRESTFul/rest/partidas/1">http://localhost:8080/ApiRESTFul/rest/partidas/1</a><br>
+<h2>Turnos</h2>
+<a href="http://localhost:8080/ApiRESTFul/rest/turnos">http://localhost:8080/ApiRESTFul/rest/turnos</a> <br>
+<a href="http://localhost:8080/ApiRESTFul/rest/turnos/1/1">http://localhost:8080/ApiRESTFul/rest/turnos/1/1</a><br>
+<span>Turno recibe dos parametros para los metodos get con param y put, id_partida y num turno, por que su clave es compuesta</span>
+<h2>Cartas</h2>
+<a href="http://localhost:8080/ApiRESTFul/rest/cartas">http://localhost:8080/ApiRESTFul/rest/cartas</a> <br>
+<a href="http://localhost:8080/ApiRESTFul/rest/cartas/1">http://localhost:8080/ApiRESTFul/rest/cartas/1</a><br>
+<h2>Metodos del juego</h2>
+<span>Pasamos una partida por parametro y nos dice su resultado </span><br>
+<a href="http://localhost:8080/ApiRESTFul/rest/metodosJuego/resultado/1">http://localhost:8080/ApiRESTFul/rest/metodosJuego/resultado/1</a> <br>
+<span>Metodo get que nos devuelve un json con las 12 cartas aleatorias </span><br>
+<a href="http://localhost:8080/ApiRESTFul/rest/metodosJuego/draft">http://localhost:8080/ApiRESTFul/rest/metodosJuego/draft</a><br>
+<span>Metodo post al que le enviamos el turno y nos genera un turno de respuesta, este endpoint es el motor principal del juego</span><br>
+<a href="http://localhost:8080/ApiRESTFul/rest/metodosJuego/jugarTurno">http://localhost:8080/ApiRESTFul/rest/metodosJuego/jugarTurno</a><br>
+<h2>Estadisticas</h2>
+<span>Sacamos la clasificacion de jugadores. El orden es por partidas ganadas y en caso de empate por partidas empatadas </span><br>
+<a href="http://localhost:8080/ApiRESTFul/rest/estadisticas/clasificacionJugadores">http://localhost:8080/ApiRESTFul/rest/estadisticas/clasificacionJugadores</a> <br>
+
+
+</body>
+</html>

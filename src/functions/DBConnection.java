@@ -3,7 +3,11 @@ package functions;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-
+/**
+ * Clase singleton enargada de devolver una conexión a la base de datos
+ * @author user
+ *
+ */
 public class DBConnection {
 	
 	private static Connection connection;

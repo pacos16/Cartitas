@@ -12,7 +12,7 @@ import model.Carta;
 /**
  * Funciones Cartas
  * @author Paco Signes
- * Clase singleton que gestiona las conexiones a la base de datos
+ * Clase singleton que gestiona las conexiones a la base de datos de las cartas
  * Obtiene las cartas y se encarga de todas las fuciones relacionadas
  * con ellas.
  */

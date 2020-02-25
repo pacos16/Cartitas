@@ -8,7 +8,11 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import model.*;
-
+/**
+ * Clase singleton que gestiona las conexiones a la base de datos de los jugadores
+ * @author user
+ *Obtiene los jugadores y se encarga de todas las fuciones relacionadas
+ */
 public class FuncionesJugadores {
 	
 	private Connection connection;
@@ -70,7 +74,6 @@ public class FuncionesJugadores {
 			statement.setString(1, correo);
 			resultSet=statement.executeQuery();
 			resultSet.next();
-			
 			return new Jugador(
 					resultSet.getString("correo"),
 					resultSet.getString("contrasenya"),
@@ -80,7 +83,7 @@ public class FuncionesJugadores {
 			
 			
 		} catch (SQLException e) {
-			System.out.println("Why?");
+			
 			return null;
 		}
 		

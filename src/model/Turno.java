@@ -1,5 +1,13 @@
 package model;
 
+/**
+ * Clase turno
+ * Esta clase es de suma importancia para el funcionamiento de la aplicación
+ * ya que se usa como medio de comunicación entre el cliente y el servidor 
+ * además de modelo para guardarlo en la base de datos.
+ * @author user
+ *
+ */
 public class Turno {
 	
 	private int partida;

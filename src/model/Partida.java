@@ -5,10 +5,10 @@ public class Partida {
 
 	
 	private int idPartida;
-	private int idPlayer;
+	private String idPlayer;
 	private boolean esPrimero;
 	private int resultado;
-	public Partida(int idPartida, int idPlayer, boolean esPrimero, int resultado) {
+	public Partida(int idPartida, String idPlayer, boolean esPrimero, int resultado) {
 		super();
 		this.idPartida = idPartida;
 		this.idPlayer = idPlayer;
@@ -22,10 +22,10 @@ public class Partida {
 	public void setIdPartida(int idPartida) {
 		this.idPartida = idPartida;
 	}
-	public int getIdPlayer() {
+	public String getIdPlayer() {
 		return idPlayer;
 	}
-	public void setIdPlayer(int idPlayer) {
+	public void setIdPlayer(String idPlayer) {
 		this.idPlayer = idPlayer;
 	}
 	public boolean isEsPrimero() {

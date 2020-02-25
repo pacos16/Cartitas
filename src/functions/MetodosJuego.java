@@ -13,7 +13,11 @@ import model.Carta;
 import model.ResultadosPartidas;
 import model.ResultadosTurnos;
 import model.Turno;
-
+/**
+ * Clase singleton para el manejo de la partida
+ * @author user
+ *
+ */
 public class MetodosJuego {
 	
 	private Connection connection;
@@ -31,25 +35,59 @@ public class MetodosJuego {
 	}
 	
 	
+	public void iniciarPartida() {
+		
+	}
+	
+	/**
+	 * Recibe turno
+	 * Esta funcion es la funcion de juego principal.
+	 * y 
+	 * @param t  Recibe un objeto de la clase turno
+	 * @return devuelve un objeto de la clase turno segun la informacion que contenga
+	 * Aqui decide que objeto envia de vuelta y que acciones se toman en la base de datos
+	 * si devuelve defensa
+	 * 
+	 */
 	public Turno recibirTurno(Turno t) {
 		
+		/**
+		 * Asigna una carta para combatir
+		 */
 		if(t.isAtaque()) {
 			ArrayList<Carta> manoCpu=getCpuDraft(t.getPartida());
 			t.setCartaCpu(manoCpu.get(0).getId());
 			setCartaJugada(t.getPartida(),t.getCartaCpu());
 		}
-		
+		/**
+		 * Calcula y guarda el resultado
+		 */
 		ResultadosTurnos rt=calcularResultado(t);
 		t.setResultado(rt.ordinal());
 		
 		FuncionesTurnos ft=FuncionesTurnos.getInstance();
 		ft.addTurno(t);
 		
+		/**
+		 * Si es fin partida devolvera un objeto
+		 * como el recibido (es decir todos los valores inicializados) 
+		 * pero le asignara resultado.
+		 * A continuación guardara el resultado de la partida en la tabla partidas
+		 */
 		if(t.getNumTurno()==6) {
 			ResultadosPartidas resultado=calcularResultadoPartida(t.getPartida());
 			FuncionesPartidas fp=FuncionesPartidas.getInstance();
 			fp.setPartidaResult(t.getPartida(),resultado);
 		}else {
+			/**
+			 * Aqui genera una mano de vuelta
+			 * Si es ataque significa que luego atacamos nosotros,
+			 * debemos devolver un objeto con el resultado de la ronda anterior
+			 * y con todo a 0 excepto caracteristica y carta cpu 
+			 * is ataque sera false con este constructor, esto es
+			 * lo que indicara al cliente que tiene que defender el siguiente turno.
+			 * 
+			 */
 			if(t.isAtaque()) {
 				ArrayList<Carta> manoCpu=getCpuDraft(t.getPartida());
 				Turno turno=new Turno();
@@ -58,14 +96,27 @@ public class MetodosJuego {
 				int r=random.nextInt(7);
 				turno.setCaracteristica(r);
 				turno.setResultado(t.getResultado());
+				turno.setPartida(t.getPartida());
 				setCartaJugada(t.getPartida(),turno.getCartaCpu());
 				t=turno;
+			}else {
+				/**
+				 * Si entra por este else significa que el cliente estaba
+				 * defendiendo. Por tanto le seteamos ataque  true para que nos ataque el
+				 */
+				t.setAtaque(true);
 			}
 		}
+		
 		return t;
 	}
 	
-	
+	/**
+	 * Calcula el resultado de las partidas
+	 * Lo hace recorriendo la tabla turnos y sumando los resultados.
+	 * @param idPartida id de la partida 
+	 * @return devuelbve el resultado 
+	 */
 	public ResultadosPartidas calcularResultadoPartida(int idPartida) {
 		FuncionesTurnos ft=FuncionesTurnos.getInstance();
 		ArrayList<Turno> turnos=ft.getTurnosPartida(idPartida);
@@ -91,7 +142,11 @@ public class MetodosJuego {
 	}
 	
 	
-	
+	/**
+	 * 
+	 * @param t  Recibe un turno
+	 * @return devuelve el resultado
+	 */
 	public ResultadosTurnos calcularResultado(Turno t) {
 		ArrayList<Carta>cartas=FuncionesCartas.getInstance().getCartas();
 		Carta cartaPlayer=cartas.get(t.getCartaJugador()-1);
@@ -157,6 +212,10 @@ public class MetodosJuego {
 		return null;
 	}
 	
+	/**
+	 * Generadores de drafts 
+	 * @return devuelve un ArrayList Carta con 12 cartas diferentes
+	 */
 	public ArrayList<Carta> generateDraft(){
 		FuncionesCartas fc=FuncionesCartas.getInstance();
 		Carta[] cartas= fc.getCartas().toArray(new Carta[fc.getCartas().size()]);
@@ -172,7 +231,12 @@ public class MetodosJuego {
 		return alist;
 	}
 	
-	
+	/**
+	 * Busca en la tabla cpu_drafts para ver que cartas 
+	 * tiene disponibles la cpu para jugar
+	 * @param idPartida
+	 * @return
+	 */
 	public ArrayList<Carta> getCpuDraft(int idPartida){
 		String query="SELECT * FROM cpu_drafts WHERE id_partida=?";
 		FuncionesCartas fc=FuncionesCartas.getInstance();
@@ -199,6 +263,13 @@ public class MetodosJuego {
 		return mano;
 	}
 	
+	/**
+	 * Funcion que actualiza el valor de la tabla cpu_drafts para marcar la carta
+	 * como jugada
+	 * @param idPartida idpartida
+	 * @param idCarta idCarta
+	 * @return
+	 */
 	public int setCartaJugada(int idPartida,int idCarta) {
 		String query="UPDATE cpu_drafts SET jugada=1 "
 				+ "WHERE id_partida=? AND id_carta=?";
@@ -214,7 +285,13 @@ public class MetodosJuego {
 			return 0;
 		}
 	}
-	
+	/**
+	 * Borra de la tabla cpu_drafts todas entradas de la partida
+	 * pasada por parametro.
+	 * La información de esta tabla es util para la partida, para el 
+	 * funcionamiento de la aplicación no tiene sentido guardarla
+	 * @param idPartida idPartida
+	 */
 	private void deleteCpuDraft(int idPartida) {
 		
 	}

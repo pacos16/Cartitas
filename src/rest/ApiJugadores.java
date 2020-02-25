@@ -15,7 +15,11 @@ import com.google.gson.Gson;
 
 import functions.FuncionesJugadores;
 import model.Jugador;
-
+/**
+ * Clase encargada de los endpoints de los jugadores
+ * @author user
+ *
+ */
 @Path("jugadores")
 public class ApiJugadores {
 	

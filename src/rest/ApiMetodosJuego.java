@@ -19,10 +19,19 @@ import functions.MetodosJuego;
 import model.Carta;
 import model.ResultadosTurnos;
 import model.Turno;
-
+/**
+ * Clase encargada de los endpoints de los metodos de juego
+ * @author user
+ *
+ */
 @Path("metodosJuego")
 public class ApiMetodosJuego {
 	
+	/**
+	 * Recibe un turno y devuelve resultado
+	 * @param json  recibe un json de la clas Turno
+	 * @return devuelve un entity con el mismo json pero con el resultado
+	 */
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -35,6 +44,12 @@ public class ApiMetodosJuego {
 		
 	}
 	
+	/**
+	 * Le pasamos un id partida por parametro y nos calcula el resultado 
+	 * mediante la funcion calcularResultadoPartida de la clase MetodosJuego
+	 * @param idPartida recibe la id partida
+	 * @return devuelve el resultado con el status. Si no existe tambien devuelve 203
+	 */
 	@GET
 	@Path("resultado/{idPartida}")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -57,7 +72,11 @@ public class ApiMetodosJuego {
 		
 	}
 		
-	
+	/**
+	 * Endpoint que llama a la funcion generate draft
+	 * 
+	 * @return devuelve un json con doce cartas aleatorias
+	 */
 	@GET
 	@Path("draft")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -68,6 +87,12 @@ public class ApiMetodosJuego {
 		
 	}
 	
+	/**
+	 * Endpoint que por el cual recibiremos el turno que envie el jugador
+	 * llamamos a la funcion recibirTurno de la clase MetodosJuego.
+	 * @param json recibe un json de la clase Turno
+	 * @return genera una respuesta json de la clase turno y la envia al cliente
+	 */
 	@POST
 	@Path("jugarTurno")
 	@Consumes(MediaType.APPLICATION_JSON)

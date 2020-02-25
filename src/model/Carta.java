@@ -1,13 +1,13 @@
 package model;
 
+/**
+ *Modelo carta
+ * @author user
+ *
+ */
 public class Carta {
 	
-	@Override
-	public String toString() {
-		return "Carta [id=" + id + ", marca=" + marca + ", modelo=" + modelo + ", motor=" + motor + ", cilindros="
-				+ cilindros + ", potencia=" + potencia + ", revolucinoes=" + revolucinoes + ", velocidad=" + velocidad
-				+ ", consumo=" + consumo + "]";
-	}
+	
 	private int id;
 	private String marca;
 	private String modelo;
@@ -91,6 +91,13 @@ public class Carta {
 	}
 	public void setConsumo(float consumo) {
 		this.consumo = consumo;
+	}
+	
+	@Override
+	public String toString() {
+		return "Carta [id=" + id + ", marca=" + marca + ", modelo=" + modelo + ", motor=" + motor + ", cilindros="
+				+ cilindros + ", potencia=" + potencia + ", revolucinoes=" + revolucinoes + ", velocidad=" + velocidad
+				+ ", consumo=" + consumo + "]";
 	}
 	
 	

@@ -14,7 +14,11 @@ import com.google.gson.Gson;
 
 import functions.FuncionesPartidas;
 import model.Partida;
-
+/**
+ * Clase responsable de los endpoints de las partidas
+ * @author user
+ *
+ */
 @Path("partidas")
 public class ApiPartidas {
 	
