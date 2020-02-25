@@ -104,5 +104,15 @@ public class ApiMetodosJuego {
 		return Response.status(200).entity(new Gson().toJson(t)).build();
 	}
 	
+	@GET
+	@Path("iniciarPartida/{correo}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response iniciarPartida(@PathParam("correo") String correo) {
+		MetodosJuego mj=MetodosJuego.getInstance();
+		String json=new Gson().toJson(mj.iniciarPartida(correo));
+		return Response.status(200).entity(json).build();
+
+	}
+	
 
 }

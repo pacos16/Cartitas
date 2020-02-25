@@ -4,12 +4,14 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 
 import model.Caracteristicas;
 import model.Carta;
+import model.Partida;
 import model.ResultadosPartidas;
 import model.ResultadosTurnos;
 import model.Turno;
@@ -35,7 +37,61 @@ public class MetodosJuego {
 	}
 	
 	
-	public void iniciarPartida() {
+	public ArrayList<Object> iniciarPartida(String correoJugador) {
+		
+		String query= "SELECT MAX(id_partida) as max from partidas";
+		Statement s;
+		ResultSet rs;
+		int idPartida;
+		Turno turno;
+		//sorteamos quien empieza
+		Random random=new Random();
+		boolean esPrimero=random.nextBoolean();
+		try {
+			s=connection.createStatement();
+			rs=s.executeQuery(query);
+			rs.next();
+			idPartida=rs.getInt("max")+1;
+			//generamos partida
+			Partida partida=new Partida(idPartida,correoJugador,
+					esPrimero,ResultadosPartidas.EN_CURSO.ordinal());
+			
+			ArrayList<Object> response=new ArrayList();
+			//Generamos el draft
+			ArrayList<Carta> draft=generateDraft();
+			//assignamos la mitad a la respuesta y la mitad la tabla
+			//del server
+			for(int i=0;i<draft.size();i++) {
+				if(i<draft.size()/2) {
+					response.add(draft.get(i));
+				}else {
+					insertaCpuDraft(idPartida,draft.get(i));
+				}
+			}
+			
+			/**
+			 * Si es primero se le devuelve un objeto con el turno, la id partida
+			 * y el valor booleano de esAtaque en true para que el cliente sepa
+			 * que le toca atacar.
+			 */
+			if(esPrimero) {
+				turno= new Turno(idPartida,0,0,0,1,esPrimero,0);
+			}else {
+				turno=new Turno();
+				ArrayList<Carta> manoCpu=getCpuDraft(idPartida);
+				turno.setCartaCpu(manoCpu.get(0).getId());
+				int r=random.nextInt(7);
+				turno.setCaracteristica(r);
+				turno.setPartida(idPartida);
+				setCartaJugada(idPartida,turno.getCartaCpu());
+			}
+			
+			response.add(turno);
+			return response;
+		}catch (Exception e){
+			return null;
+		}
+	
 		
 	}
 	
@@ -89,8 +145,8 @@ public class MetodosJuego {
 			 * 
 			 */
 			if(t.isAtaque()) {
-				ArrayList<Carta> manoCpu=getCpuDraft(t.getPartida());
 				Turno turno=new Turno();
+				ArrayList<Carta> manoCpu=getCpuDraft(t.getPartida());
 				turno.setCartaCpu(manoCpu.get(0).getId());
 				Random random=new Random();
 				int r=random.nextInt(7);
@@ -231,6 +287,8 @@ public class MetodosJuego {
 		return alist;
 	}
 	
+	
+	
 	/**
 	 * Busca en la tabla cpu_drafts para ver que cartas 
 	 * tiene disponibles la cpu para jugar
@@ -285,6 +343,25 @@ public class MetodosJuego {
 			return 0;
 		}
 	}
+	
+	
+	private void insertaCpuDraft(int idPartida,Carta c) {
+		String query="INSERT INTO cpu_drafts (id_partida,id_carta,jugada) "
+				+ "VALUES (?,?,?) ";
+		PreparedStatement ps;
+		
+		try {
+			ps=connection.prepareStatement(query);
+			ps.setInt(1, idPartida);
+			ps.setInt(2, c.getId());
+			ps.setBoolean(3, false);
+			ps.executeUpdate();
+			
+		} catch (SQLException e) {
+			
+		}
+		
+	}
 	/**
 	 * Borra de la tabla cpu_drafts todas entradas de la partida
 	 * pasada por parametro.
@@ -293,7 +370,7 @@ public class MetodosJuego {
 	 * @param idPartida idPartida
 	 */
 	private void deleteCpuDraft(int idPartida) {
-		
+		//todo deleteCpuDraft
 	}
 
 }
