@@ -5,7 +5,7 @@ package model;
  * @author user
  *
  */
-public class Carta {
+public class Carta  {
 	
 	
 	private int id;

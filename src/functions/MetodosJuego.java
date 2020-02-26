@@ -55,7 +55,7 @@ public class MetodosJuego {
 			//generamos partida
 			Partida partida=new Partida(idPartida,correoJugador,
 					esPrimero,ResultadosPartidas.EN_CURSO.ordinal());
-			
+			FuncionesPartidas.getInstance().postPartida(partida);
 			ArrayList<Object> response=new ArrayList();
 			//Generamos el draft
 			ArrayList<Carta> draft=generateDraft();
@@ -80,7 +80,7 @@ public class MetodosJuego {
 				turno=new Turno();
 				ArrayList<Carta> manoCpu=getCpuDraft(idPartida);
 				turno.setCartaCpu(manoCpu.get(0).getId());
-				int r=random.nextInt(7);
+				int r=random.nextInt(Caracteristicas.values().length);
 				turno.setCaracteristica(r);
 				turno.setPartida(idPartida);
 				setCartaJugada(idPartida,turno.getCartaCpu());
@@ -106,6 +106,8 @@ public class MetodosJuego {
 	 * 
 	 */
 	public Turno recibirTurno(Turno t) {
+		
+		System.out.println(t.toString());
 		
 		/**
 		 * Asigna una carta para combatir
@@ -149,11 +151,13 @@ public class MetodosJuego {
 				ArrayList<Carta> manoCpu=getCpuDraft(t.getPartida());
 				turno.setCartaCpu(manoCpu.get(0).getId());
 				Random random=new Random();
-				int r=random.nextInt(7);
+				int r=random.nextInt(Caracteristicas.values().length);
 				turno.setCaracteristica(r);
 				turno.setResultado(t.getResultado());
 				turno.setPartida(t.getPartida());
 				setCartaJugada(t.getPartida(),turno.getCartaCpu());
+				//truquito para mandar de vuelta la carta que necesito
+				turno.setCartaJugador(t.getCartaCpu());
 				t=turno;
 			}else {
 				/**
@@ -163,7 +167,8 @@ public class MetodosJuego {
 				t.setAtaque(true);
 			}
 		}
-		
+		System.out.println(t.toString());
+
 		return t;
 	}
 	

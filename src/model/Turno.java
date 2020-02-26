@@ -8,7 +8,7 @@ package model;
  * @author user
  *
  */
-public class Turno {
+public class Turno  {
 	
 	private int partida;
 	private int cartaJugador;

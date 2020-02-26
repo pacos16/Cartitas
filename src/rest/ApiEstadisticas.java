@@ -38,5 +38,17 @@ public class ApiEstadisticas {
 	}
 	
 	
+	@GET
+	@Path("estadisticasCartas")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getEstadisticasCartas() {
+		Estadisticas est=Estadisticas.getInstance();
+	
+	
+		String json=new Gson().toJson(est.getEstadisticasCartas());
+		return Response.status(200).entity(json).build();
+	}
+	
+	
 
 }

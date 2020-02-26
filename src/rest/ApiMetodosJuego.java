@@ -14,8 +14,10 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import functions.MetodosJuego;
+import functions.RuntimeTypeAdapterFactory;
 import model.Carta;
 import model.ResultadosTurnos;
 import model.Turno;
@@ -99,8 +101,10 @@ public class ApiMetodosJuego {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response postTurno(String json) {
 		Turno t=new Gson().fromJson(json,Turno.class);
+	
 		MetodosJuego mj=MetodosJuego.getInstance();
 		t=mj.recibirTurno(t);
+
 		return Response.status(200).entity(new Gson().toJson(t)).build();
 	}
 	
@@ -109,7 +113,8 @@ public class ApiMetodosJuego {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response iniciarPartida(@PathParam("correo") String correo) {
 		MetodosJuego mj=MetodosJuego.getInstance();
-		String json=new Gson().toJson(mj.iniciarPartida(correo));
+		Gson gson=new Gson();
+		String json=gson.toJson(mj.iniciarPartida(correo));
 		return Response.status(200).entity(json).build();
 
 	}

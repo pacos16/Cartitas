@@ -12,12 +12,12 @@ public class CartaEstadistica {
 	private int ganadas;
 	private int perdidas;
 	private int empatadas;
-	public CartaEstadistica(int idCarta, int ganadas, int perdidas, int empatadas) {
+	public CartaEstadistica(int idCarta) {
 		super();
 		this.idCarta = idCarta;
-		this.ganadas = ganadas;
-		this.perdidas = perdidas;
-		this.empatadas = empatadas;
+		this.ganadas =0;
+		this.perdidas = 0;
+		this.empatadas = 0;
 	}
 	public int getIdCarta() {
 		return idCarta;
@@ -42,6 +42,16 @@ public class CartaEstadistica {
 	}
 	public void setEmpatadas(int empatadas) {
 		this.empatadas = empatadas;
+	}
+	
+	public void addEmpatadas() {
+		empatadas++;
+	}
+	public void addGanadas() {
+		ganadas++;
+	}
+	public void addPerdidas() {
+		perdidas++;
 	}
 	
 	
