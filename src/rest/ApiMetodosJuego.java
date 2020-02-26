@@ -17,7 +17,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import functions.MetodosJuego;
-import functions.RuntimeTypeAdapterFactory;
 import model.Carta;
 import model.ResultadosTurnos;
 import model.Turno;
